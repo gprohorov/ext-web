@@ -11,6 +11,7 @@ package edu.se.extweb.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Auditable;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -23,26 +24,17 @@ import java.time.LocalDateTime;
 @ToString
 @Builder
 @Document
-public class Item {
+public class Item extends AuditMetadata {
     @Id
     private String id;
     private String name;
     private String code;
     private String description;
-    //---------- custom audit  ----------------
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+
 
 
 
     public Item(String name, String code, String description) {
-        this.name = name;
-        this.code = code;
-        this.description = description;
-    }
-
-    public Item(String id, String name, String code, String description) {
-        this.id = id;
         this.name = name;
         this.code = code;
         this.description = description;

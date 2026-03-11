@@ -9,10 +9,11 @@ package edu.se.extweb.service;
   @since 09.09.24 - 12.16
 */
 
-import edu.pzks.projtest.model.Item;
-import edu.pzks.projtest.repository.ItemRepository;
-import edu.pzks.projtest.request.ItemCreateRequest;
-import edu.pzks.projtest.request.ItemUpdateRequest;
+
+import edu.se.extweb.model.Item;
+import edu.se.extweb.repository.ItemRepository;
+import edu.se.extweb.request.ItemCreateRequest;
+import edu.se.extweb.request.ItemUpdateRequest;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ *
+ */
 @Service
 @RequiredArgsConstructor
 public class ItemService {
@@ -32,9 +36,13 @@ public class ItemService {
     private List<Item> items = new ArrayList<>();
 
     {
-        items.add(new Item( "1","Freddie Mercury", "Queen","vocal, piano"));
-        items.add(new Item("2", "Paul McCartney", "Beatles","guitar"));
-        items.add(new Item("3", "Till Lindemann", "Rammstein","vocal"));
+        items.add(new Item( "Freddie Mercury", "Queen","vocal, piano"));
+        items.add(new Item( "Paul McCartney", "Beatles","guitar"));
+        items.add(new Item( "Till Lindemann", "Rammstein","vocal"));
+        items.add(new Item( "John Lennon", "Beatles","piano"));
+        items.add(new Item( "Brian May", "Queen","solo guitar"));
+        items.add(new Item( "Tarja Turunen", "Nightwish","vocal"));
+        items.add(new Item( "Roger Waters", "Pink Floyd","poet"));
     }
 
     @PostConstruct
@@ -43,6 +51,7 @@ public class ItemService {
       for(Item item : items) {
           create(item);
       }
+
     }
     //  CRUD   - create read update delete
 
@@ -51,26 +60,15 @@ public class ItemService {
     }
 
     public Item getById(String id) {
-        Optional<Item> item = itemRepository.findById(id);
-        if (item.isEmpty() || item.get() == null) {
-            throw new NoSuchElementException("Item with id " + id + " not found.");
-        }
-        return item.get();
+        return itemRepository.findById(id).get();
     }
 
     public Item create(Item item) {
-        item.setCreateDate(LocalDateTime.now());
         return itemRepository.save(item);
     }
 
     public Item create(ItemCreateRequest request) {
-        if (itemRepository.existsByCode(request.code())) {
-            throw  new IllegalStateException("code already exists");
-        }
-        Item item = mapToItem(request);
-        item.setCreateDate(LocalDateTime.now());
-        item.setUpdateDate(null);
-        return itemRepository.save(item);
+        return mapToItem(request);
     }
 
     public  Item update(Item item) {
@@ -96,8 +94,6 @@ public class ItemService {
                             .name(request.name())
                             .code(request.code())
                             .description(request.description())
-                            .createDate(itemPersisted.getCreateDate())
-                            .updateDate(LocalDateTime.now())
                             .build();
             return itemRepository.save(itemToUpdate);
 
@@ -105,9 +101,14 @@ public class ItemService {
         return null;
     }
 
-    List<Item> createAll(List<Item> items) {
+    public List<Item> createAll(List<Item> items) {
         return itemRepository.saveAll(items);
     }
+
+    public void deleteAll() {
+       itemRepository.deleteAll();
+    }
+
 
 
 }

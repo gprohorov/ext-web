@@ -1,10 +1,11 @@
 package edu.se.extweb.controller;
 
 
-import edu.pzks.projtest.model.Item;
-import edu.pzks.projtest.request.ItemCreateRequest;
-import edu.pzks.projtest.request.ItemUpdateRequest;
-import edu.pzks.projtest.service.ItemService;
+
+import edu.se.extweb.model.Item;
+import edu.se.extweb.request.ItemCreateRequest;
+import edu.se.extweb.request.ItemUpdateRequest;
+import edu.se.extweb.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

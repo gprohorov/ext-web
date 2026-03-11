@@ -9,7 +9,8 @@ package edu.se.extweb.repository;
   @since 09.09.24 - 12.27
 */
 
-import edu.pzks.projtest.model.Item;
+
+import edu.se.extweb.model.Item;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
