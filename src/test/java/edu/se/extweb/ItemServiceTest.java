@@ -26,28 +26,19 @@ class ItemServiceTest {
 
     @BeforeAll
     static void beforeAll() {
-
-      //  underTest.createAll(items);
     }
 
     @BeforeEach
     void setUp() {
-        underTest.createAll(items);
-
     }
    @AfterEach
     void tearsDown(){
-        underTest.deleteAll();
     }
 
-    @Test
-    void whenInsertNewItem_ThenCreateDateIsPresent() {
-        //given
-
-
-    }
 
     @Test
-    void update() {
+    void whenGetAllItemsListThenSizeIs30() {
+        int size = underTest.getAll().size();
+        assertEquals(30, size);
     }
 }

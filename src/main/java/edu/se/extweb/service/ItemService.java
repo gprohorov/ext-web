@@ -45,7 +45,7 @@ public class ItemService {
         items.add(new Item( "Roger Waters", "Pink Floyd","poet"));
     }
 
-    @PostConstruct
+    //  @PostConstruct
     void init() {
       this.itemRepository.deleteAll();
       for(Item item : items) {
