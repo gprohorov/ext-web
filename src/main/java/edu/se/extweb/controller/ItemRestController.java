@@ -24,8 +24,6 @@ import java.util.List;
 public class ItemRestController {
 
     private final ItemService itemService;
-  //  private final ItemRepository repository;
-
 
     // CRUD   create read update delete
 
@@ -67,5 +65,7 @@ public class ItemRestController {
     public void delete(@PathVariable String id) {
         itemService.delById(id);
     }
+
+    //----------------------------------------------------------------
 
 }

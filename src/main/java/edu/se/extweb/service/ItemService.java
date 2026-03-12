@@ -14,6 +14,8 @@ import edu.se.extweb.model.Item;
 import edu.se.extweb.repository.ItemRepository;
 import edu.se.extweb.request.ItemCreateRequest;
 import edu.se.extweb.request.ItemUpdateRequest;
+import edu.se.extweb.response.ApiResponse;
+import edu.se.extweb.response.BaseMetaData;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -60,7 +62,7 @@ public class ItemService {
     }
 
     public Item getById(String id) {
-        return itemRepository.findById(id).get();
+        return itemRepository.findById(id).orElse(null);
     }
 
     public Item create(Item item) {
@@ -108,6 +110,27 @@ public class ItemService {
     public void deleteAll() {
        itemRepository.deleteAll();
     }
+
+    //------------------------- 12 03 response impl ------------------------------
+    public ApiResponse<BaseMetaData, Item> getByIdAsApiResponse(String id) {
+        Item itemPersisted = itemRepository.findById(id).orElse(null);
+        BaseMetaData baseMetaData = new BaseMetaData();
+        if (itemPersisted != null) {
+            ApiResponse<BaseMetaData, Item> response = new ApiResponse<>(baseMetaData, itemPersisted);
+            return response;
+        }
+
+        return null;
+    }
+
+    public  ApiResponse<BaseMetaData, Item> getAllAsApiResponse() {
+        return null;
+    }
+
+    public  ApiResponse<BaseMetaData, Item> updateAsApiResponse(Item item) {
+   return null;
+    }
+
 
 
 
