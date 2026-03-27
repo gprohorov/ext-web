@@ -13,11 +13,15 @@ package edu.se.extweb.service;
 import edu.se.extweb.model.Item;
 import edu.se.extweb.repository.ItemRepository;
 import edu.se.extweb.request.ItemCreateRequest;
+import edu.se.extweb.request.ItemPageRequest;
 import edu.se.extweb.request.ItemUpdateRequest;
 import edu.se.extweb.response.ApiResponse;
 import edu.se.extweb.response.BaseMetaData;
+import edu.se.extweb.response.PaginationMetaData;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -131,6 +135,26 @@ public class ItemService {
    return null;
     }
 
+/////////////////   26.03 ////////////////////////////////
+
+public ApiResponse<PaginationMetaData, Item> getItemsPage(ItemPageRequest request){
+
+    Pageable pageable = PageRequest.of(request.page(), request.size(),
+            Sort.by(Sort.Direction.DESC, "id"));
+
+    Page<Item> page = itemRepository.findAll(pageable);
+
+    PaginationMetaData metaData = new PaginationMetaData();
+    metaData.setCode(200);
+    // TODO
+    metaData.setNumber(page.getNumber());
+    metaData.setSize(page.getSize());
+    //TODO
+    ApiResponse<PaginationMetaData, Item> response =
+            new ApiResponse<>(metaData, page.getContent());
+
+    return null;
+}
 
 
 
