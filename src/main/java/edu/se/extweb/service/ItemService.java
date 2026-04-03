@@ -20,6 +20,7 @@ import edu.se.extweb.response.BaseMetaData;
 import edu.se.extweb.response.PaginationMetaData;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ import java.util.Optional;
 /**
  *
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ItemService {
