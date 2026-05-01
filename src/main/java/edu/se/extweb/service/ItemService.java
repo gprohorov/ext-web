@@ -148,14 +148,18 @@ public ApiResponse<PaginationMetaData, Item> getItemsPage(ItemPageRequest reques
 
     PaginationMetaData metaData = new PaginationMetaData();
     metaData.setCode(200);
-    // TODO
+    metaData.setSuccess(true);
     metaData.setNumber(page.getNumber());
     metaData.setSize(page.getSize());
-    //TODO
+    metaData.setFirst(page.isFirst());
+    metaData.setLast(page.isLast());
+    metaData.setTotalElements(page.getTotalElements());
+    metaData.setTotalPages(page.getTotalPages());
+    List<Item> items = page.getContent();
     ApiResponse<PaginationMetaData, Item> response =
-            new ApiResponse<>(metaData, page.getContent());
+            new ApiResponse<>(metaData, items);
 
-    return null;
+    return response;
 }
 
 

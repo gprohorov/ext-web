@@ -4,7 +4,10 @@ package edu.se.extweb.controller;
 
 import edu.se.extweb.model.Item;
 import edu.se.extweb.request.ItemCreateRequest;
+import edu.se.extweb.request.ItemPageRequest;
 import edu.se.extweb.request.ItemUpdateRequest;
+import edu.se.extweb.response.ApiResponse;
+import edu.se.extweb.response.PaginationMetaData;
 import edu.se.extweb.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +22,7 @@ import java.util.List;
   @since 09.09.24 - 12.01
 */
 @RestController
-@RequestMapping("api/v1/items/")
+@RequestMapping("api/v1/items")
 @RequiredArgsConstructor
 public class ItemRestController {
 
@@ -34,7 +37,7 @@ public class ItemRestController {
     }
 
     // read one
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Item showOneById(@PathVariable String id) {
         return itemService.getById(id);
     }
@@ -61,11 +64,17 @@ public class ItemRestController {
     }
 
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
         itemService.delById(id);
     }
 
-    //----------------------------------------------------------------
+    //--------------------------- paging-------------------------------------
+
+    @PostMapping("/page")
+    public ApiResponse<PaginationMetaData, Item> getItemsPage(@RequestBody ItemPageRequest request){
+        return itemService.getItemsPage(request);
+    }
+
 
 }
